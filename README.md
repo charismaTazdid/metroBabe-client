@@ -1,5 +1,13 @@
 # Getting Started with Create React App
 
+### Metro Babe is a Fullstack social medial application
+### where you can create your account and share your thought and valuable memories with anyone in intenet....
+
+
+### Tecnology I used => react.js, react-router, meterial ui, mui icons, react-google-login/OAuth, REDUX, JWT authontication for Client side and node.js - express js for server side.....
+
+#### Exiting BUILD
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -68,3 +76,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# metroBabe-client

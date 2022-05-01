@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/styles";
+import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Auth from './components/Auth/Auth';
 
 function App() {
+  let theme = createTheme();
+  // theme = responsiveFontSizes(theme)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router> 
+    <ThemeProvider theme={theme}>
+      <Container maxWidth='lg'>
+        <Navbar> </Navbar>
+        <Routes> 
+          <Route path='/' element={<Home> </Home>}> </Route> 
+          <Route path='/auth' element={<Auth> </Auth>}> </Route> 
+        </Routes>
+        
+      </Container>
+    </ThemeProvider>
+    </Router>
   );
 }
 
