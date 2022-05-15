@@ -1,12 +1,14 @@
 //post js style file
 import { makeStyles } from "@mui/styles";
 
+
 export default makeStyles(() => ({
     media: {
         height: 0,
         paddingTop: '56.25%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundBlendMode: 'darken',
+
     },
     border: {
         border: 'solid',
@@ -46,8 +48,17 @@ export default makeStyles(() => ({
         padding: '0 16px',
     },
     cardActions: {
-        padding: '0 16px 8px 16px',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around'
     },
+    cardContent: {
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: '#adb1c27e',
+
+        },
+    }
 }));
+
+
+

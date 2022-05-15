@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { AppBar, Avatar, Button, Toolbar, Typography } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo2 from '../../images/1.png';
-import useStyle from './styles'
+import useStyle from './styles';
 import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 const Navbar = () => {
     const classes = useStyle();
@@ -12,13 +13,19 @@ const Navbar = () => {
     const location = useLocation();
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-   
+    //    const user = null;
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('profile')))
+        const token = user?.token;
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            if (decodedToken.exp * 1000 < new Date().getTime()) handleLogOut()
+        }
+
+        setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
 
     const handleLogOut = () => {
-        dispatch({type: 'LOGOUT' });
+        dispatch({ type: 'LOGOUT' });
         setUser(null);
         navigate('/');
     };
@@ -26,7 +33,7 @@ const Navbar = () => {
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <div className={classes.brandContainer}>
                 <Typography component={Link} to='/' align='center' >
-                <img src={logo2}  height="50" alt="" />
+                    <img src={logo2} height="50" alt="" />
                 </Typography>
             </div>
             <Toolbar className={classes.toolbar}>

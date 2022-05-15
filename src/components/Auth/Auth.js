@@ -7,24 +7,31 @@ import GoogleLogin from 'react-google-login';
 import Icon from './icon'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { signIn, signUp } from '../../actions/auth';
 
 const Auth = () => {
     const classes = useStyle();
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-
-    const [showPassword, setShowPassword] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
 
-    const handleShowPassword = () => setShowPassword(!showPassword);
     const switchMood = () => setIsSignUp(!isSignUp);
+    const handleShowPassword = () => setShowPassword(!showPassword);
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isSignUp) {
+            dispatch(signUp(formData, navigate));
+        }
+        else {
+            dispatch(signIn(formData, navigate));
+        }
     };
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const googleSuccess = async (res) => {
         const result = res?.profileObj;
@@ -38,7 +45,7 @@ const Auth = () => {
         // console.log(res)
     };
     const googleFailure = () => {
-        console.log("dude! google login fail... don't worry, sometimes it happen... try later")
+        console.log("dude! google login attemp fail... don't worry, sometimes it happen... try later")
     };
 
     return (
@@ -54,7 +61,7 @@ const Auth = () => {
                             isSignUp && (
                                 <>
                                     <CustomInput name='firstName' label='First Name' handleChange={handleChange} autoFocus half />
-                                    <CustomInput name='firstName' label='First Name' handleChange={handleChange} half />
+                                    <CustomInput name='lastName' label='Last Name' handleChange={handleChange} half />
 
                                 </>
                             )
@@ -69,10 +76,22 @@ const Auth = () => {
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>
 
+                    <Grid container justifyContent='center' >
+                        <Grid item >
+                            <Button onClick={switchMood} color='inherit' className={classes.switchBtn} >
+                                {
+                                    isSignUp ? <> Already have an account? &#160;<b>Sign In</b> </>
+                                        :
+                                        <> Don't have an account? &#160; <b> Sign Up </b>  </>
+                                }
+                            </Button>
+                        </Grid>
+                    </Grid>
+
                     <GoogleLogin
                         clientId='1061426492004-iggjv0sp8vm2h3un51g23a15nd4c7j30.apps.googleusercontent.com'
                         render={(renderProps) => (
-                            <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained" >
+                            <Button color='inherit' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained" >
                                 SIGN IN WITH GOOGLE
                             </Button>
                         )}
@@ -81,15 +100,7 @@ const Auth = () => {
                         cookiePolicy='single_host_origin'
                     />
 
-                    <Grid container justifyContent='center' >
-                        <Grid item >
-                            <Button onClick={switchMood} color='warning'>
-                                {
-                                    isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"
-                                }
-                            </Button>
-                        </Grid>
-                    </Grid>
+
                 </form>
             </Paper>
         </Container>

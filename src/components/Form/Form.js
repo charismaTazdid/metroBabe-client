@@ -8,41 +8,46 @@ import { createPost, updatePost } from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId }) => {
     const classes = useStyles();
-    const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+    const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
+    const user = JSON.parse(localStorage.getItem('profile'));
     // console.log(currentId)
     //when user select any post to edit, we want to fullfill from with that data
-    const post = useSelector(state => currentId ? state.posts.find(post => post._id === currentId) : null);
-    useEffect(() => { 
-        if(post){
-            setPostData(post)
-        }
+    const post = useSelector(state => currentId ? state.posts.posts.find(post => post._id === currentId) : null);
+
+    useEffect(() => {
+        if (post) { setPostData(post) }
     }, [post]);
 
     const dispatch = useDispatch();
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (currentId) {
-            dispatch(updatePost(currentId, postData))
+            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
         } else {
-            dispatch(createPost(postData))
-
+            dispatch(createPost({ ...postData, name: user?.result?.name }));
         }
         clear()
     };
 
+    if (!user?.result?.name) {
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant='h6' align='center'> Please Login first if you want to Create post </Typography>
+            </Paper>
+        )
+    }
+
     const clear = () => {
         setCurrentId(null);
-        setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' })
+        setPostData({ title: '', message: '', tags: '', selectedFile: '' })
     };
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoCapitalize='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant='h6'> {currentId? 'Edit' : 'Create'} Your post </Typography>
-
-                <TextField name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })}>
-                </TextField>
+                <Typography variant='h6'> {currentId ? 'Edit' : 'Create'} Your post </Typography>
                 <TextField name='title' variant='outlined' label='Title' fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })}>
                 </TextField>
                 <TextField name='message' variant='outlined' label='Message' fullWidth value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })}>
