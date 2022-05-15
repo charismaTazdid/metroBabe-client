@@ -1,4 +1,4 @@
-import { CREATE, DELETE, FETCH_ALL, FETCH_POST, FETCH_BY_SEARCH, LIKE, UPDATE, START_LOADING, END_LOADING } from "../constants/actionTypes";
+import { CREATE, DELETE, FETCH_ALL, FETCH_POST, FETCH_BY_SEARCH, LIKE, UPDATE, START_LOADING, END_LOADING, COMENT } from "../constants/actionTypes";
 
 const posts = (states = { isLoading: true, posts: [] }, action) => {
 
@@ -26,6 +26,8 @@ const posts = (states = { isLoading: true, posts: [] }, action) => {
 
         case UPDATE:
         case LIKE:
+            return { ...states, posts: states.posts.map((pst) => pst._id === action.payload._id ? action.payload : pst) };
+        case COMENT:
             return { ...states, posts: states.posts.map((pst) => pst._id === action.payload._id ? action.payload : pst) };
 
         case DELETE:

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getPost, getPostBySearch } from '../../actions/posts';
 import useStyles from './styles';
 import notFound from '../../images/noimage.jpg';
+import Coments from './Coments';
 
 const PostDetails = () => {
     const { id } = useParams();
@@ -43,6 +44,7 @@ const PostDetails = () => {
     return (
         <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
             <div className={classes.card}>
+           
                 <div className={classes.section}>
                     <Typography variant="h3" component="h2">{post.title}</Typography>
                     <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
@@ -52,7 +54,7 @@ const PostDetails = () => {
                     <Divider style={{ margin: '20px 0' }} />
                     <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
                     <Divider style={{ margin: '20px 0' }} />
-                    <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+                    <Coments post={post}></Coments>
                     <Divider style={{ margin: '20px 0' }} />
                 </div>
                 <div className={classes.imageSection}>

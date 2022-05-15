@@ -6,7 +6,7 @@ import CustomInput from './CustomInput';
 import GoogleLogin from 'react-google-login';
 import Icon from './icon'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { signIn, signUp } from '../../actions/auth';
 
 const Auth = () => {
@@ -20,6 +20,10 @@ const Auth = () => {
 
     const switchMood = () => setIsSignUp(!isSignUp);
     const handleShowPassword = () => setShowPassword(!showPassword);
+
+    const location = useLocation()
+    // console.log(location?.state?.id)
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,8 +42,10 @@ const Auth = () => {
         const token = res?.tokenId;
         try {
             dispatch({ type: 'AUTH', data: { result, token } });
-            navigate('/')
-        } catch (error) {
+            navigate('/posts');
+
+        }
+        catch (error) {
             console.log(error)
         }
         // console.log(res)

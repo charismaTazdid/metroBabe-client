@@ -5,8 +5,9 @@ export default makeStyles((theme) => ({
   media: {
     borderRadius: '20px',
     objectFit: 'cover',
-    width: '100%',
+    // width: '100%',
     maxHeight: '600px',
+    maxWidth: '360px'
 
   },
   card: {
@@ -50,5 +51,16 @@ export default makeStyles((theme) => ({
   loadingPaper: {
     display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
   },
+  commentOuterContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+  },
+  commentInnerContainer: {
+      height: '420px',
+      overflowY: 'auto',
+      marginRight: '30px',
+      paddingRight: '30px'
+  },
+
 }));
 
