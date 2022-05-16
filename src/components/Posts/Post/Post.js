@@ -15,38 +15,45 @@ const Post = ({ post, setCurrentId }) => {
     const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('profile'));
-    const [isLiked, setIsLiked] = useState(false);
+    const [totalLikes, setTotalLikes] = useState(post?.likes); //post > likes is an array
 
     const handleDelete = () => {
         dispatch(deletePost(post._id))
     };
+    const userId = (user?.result?.googleId || user?.result?._id);
+    const hasLiked = totalLikes.find((like) => like === userId); //in the likes array we put id of user who like a post
 
-    const messageResize = (string, countChar) => {
-        return string?.length > countChar ? string.substr(0, countChar - 1) + `  ...Read more📖` : string;
+    const handleLikes = async () => {
+        dispatch(likePost(post._id));
+        if (hasLiked) {
+            setTotalLikes(totalLikes.filter(id => id !== userId));
+        } else {
+            setTotalLikes([...totalLikes, userId])
+        }
     };
-    // console.log(post)
 
     const Likes = () => {
 
-        if (post.likes.length > 0) {
-            return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        if (totalLikes.length > 0) {
+            return totalLikes.find((like) => like === userId)
                 ? (
                     <>
-                        {setIsLiked(true)}
-                        {post.likes.length > 1 ? `you and ${post.likes.length - 1} others react${post.likes.length > 1 ? 's' : ''}` : `you react this post`}
+                        {totalLikes.length > 1 ? `you and ${totalLikes.length - 1} others react${totalLikes.length > 1 ? 's' : ''}` : `you react this post`}
                     </>
                 ) : (
                     <>
-                        {setIsLiked(false)}
-                        {post.likes.length} {post.likes.length === 1 ? 'react this post' : 'reacts this post'}
+                        {totalLikes.length} {totalLikes.length === 1 ? 'react this post' : 'reacts this post'}
                     </>
                 )
         }
-        return <> {setIsLiked(false)} </>
     };
+
 
     const openPost = () => {
         navigate(`/posts/${post._id}`)
+    };
+    const messageResize = (string, countChar) => {
+        return string?.length > countChar ? string.substr(0, countChar - 1) + `  ...Read more📖` : string;
     };
 
     return (
@@ -81,9 +88,9 @@ const Post = ({ post, setCurrentId }) => {
 
             <CardActions className={classes.cardActions}>
                 <Button color='primary' disabled={!user?.result} size="small"
-                    onClick={() => dispatch(likePost(post._id))} >
+                    onClick={handleLikes} >
                     {
-                        isLiked ? <FavoriteIcon color='error' /> : <><FavoriteBorderOutlinedIcon color='error' />&#160; Like</>
+                        hasLiked ? <FavoriteIcon color='error' /> : <><FavoriteBorderOutlinedIcon color='error' />&#160; Like</>
                     }
                 </Button>
                 <Typography variant="caption" style={{ color: 'gray' }} fontSize='small'>

@@ -3,11 +3,15 @@ import { makeStyles } from "@mui/styles";
 
 export default makeStyles((theme) => ({
   media: {
-    borderRadius: '20px',
+    borderRadius: '10px',
     objectFit: 'cover',
     // width: '100%',
     maxHeight: '600px',
-    maxWidth: '360px'
+    maxWidth: '360px',
+    [theme.breakpoints.down('sm')]: {
+     maxWidth: '300px',
+     maxHeight: '400px'
+    },
 
   },
   card: {
@@ -21,11 +25,17 @@ export default makeStyles((theme) => ({
   section: {
     borderRadius: '20px',
     margin: '10px',
+    marginLeft: '100px',
     flex: 1,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+      margin: '10px',
+      flex: 1,
+    },
   },
   section2: {
     borderRadius: '20px',
-    marginTop: '150px',
+    marginTop: '30px',
     flex: 1,
   },
   imageSection: {
@@ -54,9 +64,13 @@ export default makeStyles((theme) => ({
   commentOuterContainer: {
       display: 'flex',
       justifyContent: 'space-between',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+      },
+
   },
   commentInnerContainer: {
-      height: '420px',
+      maxHeight: '420px',
       overflowY: 'auto',
       marginRight: '30px',
       paddingRight: '30px'

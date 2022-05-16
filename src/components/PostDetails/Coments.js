@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, Divider, TextField, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ const Coments = ({ post }) => {
             const commentFromUpdatedPost = await dispatch(commentPost(finaleCommnet, post._id));
             setComments(commentFromUpdatedPost);
             setComment('');
-            commentRef.current.scrollIntoView({behavior: 'smooth'})
+            commentRef.current.scrollIntoView({behavior: "smooth"});
         }
         else {
             alert('you are not allow to comment, login first...');
@@ -37,16 +37,16 @@ const Coments = ({ post }) => {
         <div>
             <div className={classes.commentOuterContainer}>
                 <div className={classes.commentInnerContainer}>
-                    <Typography gutterBottom variant='h6'> Comments </Typography>
+                    {/* <Typography gutterBottom variant='h6'> Comments: </Typography> */}
                     {
                         comments.map((cmnt, index) => (
-                            <Typography key={index} variant='subtitle1' gutterBottom> 
-                            <strong> {cmnt.split(' : ')[0].toUpperCase()}</strong> says : 
-                            {cmnt.split(':')[1]}
+                            <Typography key={index} variant='subtitle1' gutterBottom style={{ margin: '20px 0', borderBottom: '2px solid lightgray' }}>
+                                <strong> {cmnt.split(' : ')[0].toUpperCase()}</strong> says :
+                                {cmnt.split(':')[1]}
                             </Typography>
                         ))
                     }
-                    <div ref={commentRef}/>
+                    <div ref={commentRef} />
                 </div>
                 <div style={{ width: '70%' }}>
                     <Typography gutterBottom variant='h6'> Write A Comment </Typography>
@@ -59,9 +59,6 @@ const Coments = ({ post }) => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                     <Button style={{ marginTop: '10px' }} fullWidth disabled={(!comment)} variant='contained' onClick={handleCommentSubmit}> Submit </Button>
-
-
-
                 </div>
 
             </div>

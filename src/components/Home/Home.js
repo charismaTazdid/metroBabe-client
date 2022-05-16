@@ -70,19 +70,30 @@ const Home = () => {
                             />
                             <Button onClick={handleSearch} className={classes.searchBtn} color='primary' variant='contained'> Search </Button>
                         </AppBar>
-                        <Form currentId={currentId} setCurrentId={setCurrentId} > </Form>
-                        <Paper elevation={6}>
+                        {/* <Form currentId={currentId} setCurrentId={setCurrentId} > </Form> */}
+
+                        {/* paaginateion */}
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={9}>
+                        {
+                            currentId ?
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <Form currentId={currentId} setCurrentId={setCurrentId} >
+                                    </Form>
+                                </Grid>
+                                :
+                                <Posts setCurrentId={setCurrentId}> </Posts>
+                        }
+
+
+                        <Paper elevation={6} style={{ marginTop: '30px', padding: '15px 7px', }}>
                             {
                                 !searchQuery && !tags.length && (
                                     <Paginate page={page} className={classes.pagination} />
                                 )
                             }
                         </Paper>
-
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={9}>
-                        <Posts setCurrentId={setCurrentId}> </Posts>
                     </Grid>
 
 
