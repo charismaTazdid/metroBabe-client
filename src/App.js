@@ -1,7 +1,6 @@
 import { Container } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from "@mui/styles";
-
 import Home from './components/Home/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Auth from './components/Auth/Auth';
